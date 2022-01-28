@@ -34,6 +34,10 @@ class Credit extends CI_Controller
 		$this->load->model('credits');
 		$data['get_credit'] = $this->credits->retrieveCredit();
 		$data['get_creditRemains'] = $this->credits->retrieveCreditRemains();
+		$data['retrieveCreditDetails'] = $this->credits->retrieveCreditDetails();
+
+
+		
 		
 		if ($this->session->userdata('admin')) {
 			$sidebar = "sadmin";
@@ -202,6 +206,22 @@ class Credit extends CI_Controller
                 redirect('portal/credit/action/credit_remain');
 			}
 
+        }
+    }
+
+
+	function delete_credit()
+    {
+
+        if (isset($_POST['credit_id'])) {
+			echo '<script>   if (confirm("Do you want to save changes?") == true) { </script>';
+       $this->load->model('credits');
+        if ($this->credits->delete_credit()) {
+            // set flash data
+            $this->session->set_flashdata('error', 'Credit Deleted Successfully');
+            redirect('portal/credit/action/add_credit');
+        }
+		echo '<script>  } </script>';
         }
     }
 

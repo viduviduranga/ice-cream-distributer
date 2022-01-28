@@ -27,7 +27,7 @@ $date = date('d-m-y h:i:s');
             <!-- SELECT2 EXAMPLE -->
             <div class="card card-default">
                 <div class="card-header">
-                    <h3 class="card-title">User Role Assign</h3>
+                    <h3 class="card-title">Remaining Balance : Rs. <span  id="remainBal"></span></h3>
 
 
                 </div>
@@ -49,12 +49,13 @@ $date = date('d-m-y h:i:s');
                                         <?php $i = 0;
 
                                     foreach ($get_creditRemains as $row) {
-
-                                        ?>
+                                        if ($row->credit_status == 1) {
+                                            ?>
                                         <option value="<?php echo $row->credit_id; ?>">
                                             <?php echo $row->credit_invoice; ?>
                                         </option>
-                                        <?php }?>
+                                        <?php }
+                                                }?>
                                     </select>
                                 </div>
 
@@ -112,9 +113,9 @@ $date = date('d-m-y h:i:s');
                                     <option disabled selected="selected">Select Lorry</option>
                                     <?php $i = 0;
 
-                                foreach ($get_lorry as $get_lorrys) {
+foreach ($get_lorry as $get_lorrys) {
 
-                                    ?>
+    ?>
 
                                     <option value="<?php echo $get_lorrys->lor_id; ?>">
                                         <?php echo $get_lorrys->lor_name; ?>
@@ -140,7 +141,7 @@ $date = date('d-m-y h:i:s');
                             </div>
                         </div>
 
-                        <div class="col">                         
+                        <div class="col">
                             <div class="form-group">
                                 <label for="user_note">Amount</label>
                                 <input type="number" class="form-control" id="amount" name="amount"
@@ -197,6 +198,7 @@ $date = date('d-m-y h:i:s');
 
         var shop_name = document.getElementById('shop_name');
         var date = document.getElementById('date');
+        var remain_bal = document.getElementById('remainBal');
 
         var inv_no = document.getElementById('inv_no').value;
 
@@ -211,8 +213,12 @@ $date = date('d-m-y h:i:s');
                     var i = 0;
                     $.each(obj, function (key, value) {
 
-                        shop_name.value = obj[0]["credit_shop"];
-                        date.value = obj[0]["credit_date"];
+                        // shop_name.value = obj[0]["credit_shop"];
+                        // date.value = obj[0]["credit_date"];
+
+                        shop_name.value = obj[0];
+                        date.value = obj[1];
+                        remain_bal.innerHTML = obj[2];
 
                         // $('#credit_id').append('<option value="'+obj[i]["credit_id"]+'">'+obj[i]["credit_id"]+ " - " +obj[i]["credit_shop"]+'</option>');
                         // i++;
@@ -242,9 +248,9 @@ $date = date('d-m-y h:i:s');
 
         }
 
-        
 
-           
+
+
         function loadEmp(){
 
 
@@ -253,7 +259,7 @@ var emp_lorry = document.getElementById('emp_lorry').value;
 var credit_collect = document.getElementById('credit_collect');
 
 
-// console.log(emp_lorry);                                
+// console.log(emp_lorry);
 
 var url = '<?php echo base_url('portal/credit/retrievesEmp'); ?>';
 
@@ -261,8 +267,8 @@ var url = '<?php echo base_url('portal/credit/retrievesEmp'); ?>';
             function (data){
             if(data!='no'){
 
-                var obj = JSON.parse(data); 
-                                                                
+                var obj = JSON.parse(data);
+
                 //alert(obj[0]["emp_name"]);
 
                 $('#credit_collect').empty();
@@ -271,7 +277,7 @@ var url = '<?php echo base_url('portal/credit/retrievesEmp'); ?>';
                     $('#credit_collect').append('<option value="'+obj[i]["emp_id"]+'">'+(obj[i]["emp_role_id"]==1 ? "Sales Rep" : "Collector")+ " - " +obj[i]["emp_name"]+'</option>');
                     i++;
                 })
-        
+
             }
         else if(data=='no'){
         console.log("NOT SAVED");

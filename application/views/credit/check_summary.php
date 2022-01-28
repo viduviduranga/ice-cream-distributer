@@ -8,7 +8,7 @@
             <div class="row mb-2">
                 <div class="col-sm-6">
                     <h1>
-                        Credit List
+                       Check Summary
                     </h1>
                 </div>
                 <div class="col-sm-6">
@@ -39,11 +39,6 @@
                             <!-- <h3 class="card-title">DataTable with default features</h3> -->
                             <div align="right">
 
-
-                                <a class="btn btn-primary" href="<?php echo base_url(); ?>portal/credit/action/add_credit_process" class="nav-link">
-                                    Add New Credit
-                                </a>
-
                             </div>
 
 
@@ -58,11 +53,11 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Date</th>
-                                        <th>Lorry</th>
-                                        <th>Invoice No</th>
-                                        <th>Employee</th>
-                                        <th>Shop Name </th>
-                                        <th>Ammount </th>
+                                        <th>Invoice ID</th>
+                                        <th>Credit Amount</th>
+                                        <th>Credit Shop</th>
+                                        <th>Lorry Name </th>
+                                        <th>Status </th>
                                         <!-- <th>Paid </th>
                                         <th>Remining</th> -->
                                         <th>Action</th>
@@ -78,20 +73,31 @@
 
                                             <td> <?php echo $i; ?></td>
                                             <td> <?php echo $get_credits->credit_date; ?></td>
-                                            <td><?php echo $get_credits->lor_name; ?></td>
                                             <td><?php echo $get_credits->credit_invoice; ?></td>
-                                            <td> <?php echo $get_credits->emp_name; ?></td>
+                                            <td><?php echo $get_credits->credit_amount; ?></td>
                                             <td><?php echo $get_credits->credit_shop; ?></td>
-                                            <td align="right"><?php echo number_format($get_credits->credit_amount, 2); ?></td>
+                                            <td><?php echo $get_credits->lor_name; ?></td>
+
+
+                                            <td><?php if($get_credits->credit_status == 1) {echo '<span class="badge badge-warning">Pending</span>'; }
+                                                                                         else { echo '<span class="badge badge-success">Completed</span>';
+                                                                                                 }  ?></td>
+
+                                          
                                             <td align="center">
 
-                                                <form method="post" action="<?php echo base_url('portal/credit/delete_credit'); ?>" >
+                                                <!-- <form method="post" action="<?php echo base_url('portal/credit/'); ?>" >
 
-                                                    <input type="hidden" value="<?php echo $get_credits->credit_id; ?>" id="credit_id" name="credit_id">
-                                                    <button type="submit" id="submitButton" name="submitButton" class="btn btn btn-danger ">
-                                                        Delete
+
+
+                                                    <input type="hidden" value="<?php echo $get_credits->credit_id; ?>" id="more_btn" name="more_btn">
+                                                    <button type="submit" id="submitButton" name="submitButton" class="btn btn btn-primary ">
+                                                        More
                                                     </button>
-                                                </form>
+                                                </form> -->
+
+                                                <a class="btn btn btn-primary "  href="<?php echo ''. base_url('portal/credit/action/view_credit_info?credit_id=') . $get_credits->credit_id . '';?>">More</a>
+                                                   
 
                                         </tr>
                                     <?php
