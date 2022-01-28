@@ -347,5 +347,22 @@ class Setup extends CI_Controller
     }
 
 
+    public function add_payment()
+    {
+
+        if (isset($_POST['lorry_add'])) {
+
+            $this->load->model('setups');
+
+            if ($this->setups->add_lorry()) {
+                // set flash data
+                $this->session->set_flashdata('success', 'New Lorry Added Successfully');
+                redirect('portal/setup/action/setup_lorry');
+            }
+
+        }
+    }
+
+
 
 }

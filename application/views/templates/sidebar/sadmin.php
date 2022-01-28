@@ -155,6 +155,13 @@
               </a>
             </li>
 
+
+            <li class="nav-item">
+              <a href="<?php echo base_url(); ?>portal/credit/action/credit_remain" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Generate INV</p>
+              </a>
+            </li>
            
 
 
