@@ -1,5 +1,5 @@
 <footer class="main-footer">
-    <strong>Copyright &copy; 2021 <a href="https://boc.lk">Bank Of Ceylon IT</a>.</strong>
+<strong>Copyright &copy; 2021 <a href="https://blendpach.com">Blendpach Systems</a>.</strong>
     All rights reserved. 
     
   </footer>

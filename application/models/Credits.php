@@ -16,6 +16,15 @@ class Credits extends CI_Model
         ->join('employers', 'employers.emp_id = credit.credit_collect')->get()->result();
     }
 
+
+    public function retrieveCreditDetails()
+    {
+        return $this->db->select('*')->from('credit_payments')
+        ->join('lorry', 'lorry.lor_id = credit_payments.cp_lorry')
+        ->join('employers', 'employers.emp_id = credit_payments.cp_collector')->get()->result();
+    }
+
+
     
     public function retrieveCreditRemains()
     {
@@ -57,7 +66,27 @@ class Credits extends CI_Model
 
 		$inv_no =  $this->input->post('inv_no');
         $arr['credit_id'] = $inv_no;
-        return $this->db->get_where('credit', $arr)->result();
+        // return $this->db->get_where('credit', $arr)->result();
+
+
+        $this->db->select('*')->from('credit')->where($arr);
+		$queryEE = $this->db->get();
+
+       	
+		if ($queryEE->num_rows() > 0) {
+	
+			$d_array[0]= $queryEE->row()->credit_shop;
+			$d_array[1]= $queryEE->row()->credit_date;		
+			$d_array[2]= number_format($this->checkRemainBal($inv_no),2);
+		
+			return $d_array;
+        	}
+			else{
+	
+			 return "no";
+			
+			}
+        
 		
 	 }
 
@@ -73,7 +102,8 @@ class Credits extends CI_Model
 		
 		$this->db->select('*')->from('employers')->where($arr);
 		$queryEE = $this->db->get();
-	
+
+       	
 		if ($queryEE->num_rows() > 0) {
 	
 			$d_array[0]= $queryEE->row()->emp_id;
@@ -214,6 +244,57 @@ class Credits extends CI_Model
 
 
     
+        // $total_payments = 0;
+        // $total_credit_amount = 0;
+        // $balance_due = 0;
+
+        // $arr['cp_inv_id'] = $credit_invoice;
+        // $res =  $this->db->get_where('credit_payments', $arr)->result();
+        // foreach($res as $row){
+        //     $temp = $row->cp_amount;
+        //     $total_payments = $total_payments+$temp;
+        // }
+
+        // $arr2['credit_id'] = $credit_invoice;
+        // $res2 =  $this->db->get_where('credit', $arr2)->result();
+        // foreach($res2 as $row){
+        //     $total_credit_amount = $row->credit_amount;
+        // }
+
+        $balance_due = $this->checkRemainBal($credit_invoice);
+
+        //$balance_due = $total_credit_amount - $total_payments;
+
+        if($balance_due > $credit_amount){
+
+            $this->db->insert('credit_payments', $insert_to_payment);
+
+            return true;
+
+        }else if($balance_due == $credit_amount){
+
+            $update_credit = array(
+                'credit_status' => 0,
+            );
+    
+            $this->db->where('credit_id', $credit_invoice);
+            $this->db->update('credit', $update_credit);
+            $this->db->insert('credit_payments', $insert_to_payment);
+            return true;
+
+        }      
+        
+        else {
+            return false;
+        }
+
+
+    }
+
+
+    
+    public function checkRemainBal($credit_invoice){
+
         $total_payments = 0;
         $total_credit_amount = 0;
         $balance_due = 0;
@@ -234,18 +315,39 @@ class Credits extends CI_Model
 
         $balance_due = $total_credit_amount - $total_payments;
 
-        if($balance_due >= $credit_amount){
+        return $balance_due;
+        
+    }
 
-            $this->db->insert('credit_payments', $insert_to_payment);
 
-            return true;
-
-        }else {
-            return false;
+    public function get_credits()
+    {
+        $data = $this->db->get('credit')->result();
+        $total = 0;
+        foreach ($data as  $datas) {
+            if($datas->credit_status == 1){
+            $amount  =  $datas->credit_amount;
+            $total = $total + $amount;
+            }
         }
 
-
-
+        return $total;
     }
+
+    public function delete_credit()
+    {
+
+        $credit_id = "";
+
+        $credit_id = $this->input->post('credit_id');
+
+        $this->db->where('credit_id', $credit_id);
+        $this->db->delete('credit_id');
+
+        return true;
+    }
+
+
+    
 
 }

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CeyBank Holiday Homes Management Portal</title>
+  <title>Credit Management System</title>
 
   <!-- Google Font: Source Sans Pro -->
 	<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> -->
@@ -57,7 +57,7 @@
 
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="<?php echo base_url();?>dist/img/logo.jfif" alt="Ceybank Portal" height="60" width="60">
+    <img class="animation__shake" src="<?php echo base_url();?>dist/img/logo.png" alt="Ceybank Portal" height="60" width="60">
   </div>
 
   <!-- Navbar -->

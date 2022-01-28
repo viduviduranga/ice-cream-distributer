@@ -23,39 +23,18 @@
     <section class="content">
       <div class="container-fluid">
         <!-- Small boxes (Stat box) -->
-        <div class="row">
-					<a  href="<?php echo base_url();?>portal/booking/step/1">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h1> Add Booking </h1>
-<div align =  "right">
-<!-- <button type="button" class="btn btn-primary">Primary</button> -->
-								</div>
-              </div>
-              <div class="icon">
-                <!-- <i class="ion ion-bag"></i> -->
-              </div>
-              <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
-            </div>
-					</div>
-					</a>
-          <!-- ./col -->
-          
-          <!-- ./col -->
-				</div>
+        
 				<div class="row">
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <!-- <h3><?php echo $procount; ?></h3> -->
+                <h3>Rs <?php echo number_format($get_credits ,2 ); ?></h3>
 
-                <p>Properties</p>
+                <p>Total Credits</p>
               </div>
               <div class="icon">
-                <i class="ion ion-bag"></i>
+              <i class="fa fa-money" aria-hidden="true"></i>
               </div>
               <!-- <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a> -->
             </div>
@@ -65,7 +44,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <!-- <h3><?php echo $roomcount; ?></h3> -->
+                <h3><?php  ?></h3>
 
                 <p>Total Rooms</p>
               </div>
@@ -80,7 +59,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <!-- <h3><?php echo $cuscount; ?></h3> -->
+                <h3></h3>
 
                 <p>Registered Customers</p>
               </div>
@@ -95,7 +74,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <!-- <h3><?php echo $bookingcount; ?></h3> -->
+                <h3></h3>
 
                 <p>Total Bookings</p>
               </div>

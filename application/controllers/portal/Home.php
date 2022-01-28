@@ -52,7 +52,8 @@ class Home extends CI_Controller {
                         // Whoops, we don't have a page for that!
                         show_404();
                 }
-		
+
+	
 
 		if ($this->session->userdata('admin')) {
 			$sidebar="sadmin";
@@ -80,11 +81,12 @@ class Home extends CI_Controller {
 		}
 		
 
-       
+		$this->load->model('credits');
+		$data['get_credits'] = $this->credits->get_credits();
 
 
         
-		$this->load->view('templates/header');
+		$this->load->view('templates/header' , $data);
 		
 			
 
