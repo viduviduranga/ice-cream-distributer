@@ -33,6 +33,7 @@ class Credit extends CI_Controller
 
 		$this->load->model('credits');
 		$data['get_credit'] = $this->credits->retrieveCredit();
+		$data['get_creditRemains'] = $this->credits->retrieveCreditRemains();
 		
 		if ($this->session->userdata('admin')) {
 			$sidebar = "sadmin";
@@ -152,6 +153,21 @@ class Credit extends CI_Controller
 
 	}
 
+	public function retrieveCreditByID(){
+	
+		if (isset($_POST['inv_no'])) {
+
+			$this->load->model('credits');
+			$temp_array =  $this->credits->load_credit_by_ID();
+			echo json_encode($temp_array, JSON_FORCE_OBJECT);
+
+		} else {
+			echo 'no';
+		}
+
+		
+	}
+
 
 	public function uploadExcel(){
 
@@ -164,6 +180,29 @@ class Credit extends CI_Controller
         }
 
 
+    }
+
+
+
+	
+
+    public function add_payment()
+    {
+
+        if (isset($_POST['addpay'])) {
+
+            $this->load->model('credits');
+
+            if ($this->credits->add_payment() == true) {
+                // set flash data
+                $this->session->set_flashdata('success', 'Paid Successfully');
+                redirect('portal/credit/action/credit_remain');
+            } else {
+				$this->session->set_flashdata('error', 'Please check amount again');
+                redirect('portal/credit/action/credit_remain');
+			}
+
+        }
     }
 
 
